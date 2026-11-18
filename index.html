@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>森霸電廠（豐德發電廠）發展歷史、運營現況與未來展望互動分析</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #FAF8F5;
+      color: #1E293B;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+    }
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 290px;
+      max-height: 380px;
+    }
+    @media (min-width: 768px) {
+      .chart-container {
+        height: 330px;
+      }
+    }
+    .tab-active {
+      background-color: #0F766E;
+      color: #FFFFFF;
+      border-color: #0F766E;
+    }
+    .tab-inactive {
+      background-color: #FFFFFF;
+      color: #475569;
+      border-color: #CBD5E1;
+    }
+    .tab-inactive:hover {
+      background-color: #F1F5F9;
+      color: #0F766E;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-teal-100 selection:text-teal-900">
+  <!-- Chosen Palette: Warm Stone Neutrals (#FAF8F5) with Deep Slate (#1E293B), Energy Teal (#0F766E) primary accent, and Warm Amber (#D97706) secondary alert/highlight accent -->
+  <!-- Application Structure Plan: Designed as a 5-part thematic executive dashboard and interactive analytical report rather than a linear wall of text. Top sticky navigation connects: (1) Macro Context & Capacity Growth, (2) Historical Timeline & Multi-Phase Technical Comparator, (3) Operational Mechanics (DSS Duck Curve & Maintenance) & Environmental Engineering (NOx & Air-Cooling), (4) 2026 Corporate Restructuring & Three Major Social/Legal Controversies, and (5) Future Outlook (Phase 3 EIA & 2029 PPA Renewal Risk) with Verified Sources. This structure allows stakeholders to cross-examine technical upgrades alongside financial shifts and community governance risks dynamically. -->
+  <!-- Visualization & Content Choices:
+    1. Capacity Expansion Bar/Line Chart (Chart.js Canvas): Compares Phase 1 (1,013.71 MW), Phase 2 (+1,100 MW = 2,113.71 MW), and Phase 3 Planned (+1,800 MW = 3,913.71 MW) -> Goal: Compare growth scale -> Interactive milestone detail toggle.
+    2. Interactive Timeline & Tech Spec Matrix (HTML/JS): Filters milestones (1999-2029) and switches technical specs across Phase 1, 2, and 3 -> Goal: Organize complex engineering & regulatory history.
+    3. DSS Load & Solar Duck Curve Simulation (Chart.js Canvas): Visualizes 24-hour dispatch behavior showing daytime solar ramp-down and evening peak ramp-up -> Goal: Explain DSS operational stress -> Interactive scenario selector (晴天光電高發載 vs 尖峰滿載調度).
+    4. NOx Emission Reduction Chart (Chart.js Canvas): Compares P1 original (20 ppm), P1 SCR upgraded (14.5 ppm), and P2 advanced SCR (4 ppm avg / 2-6 ppm) -> Goal: Demonstrate environmental offset compliance.
+    5. Community Feedback Fund Allocation Doughnut Chart (Chart.js Canvas) & Restructuring Cards: Visualizes the new 8,600萬 NTD annual distribution (50% Shanshang, 35% Neighboring Districts, 15% Tainan City) alongside tabs for the 21.5億 gap dispute, 4.89億 FTC fine, and 18.2 km pipeline inspection -> Goal: Clarify governance & financial impacts.
+    6. 2029 PPA Rate Negotiation Gap Bar Chart (Chart.js Canvas): Contrasts current ~2.2 NTD/kWh vs Sunba's May 2025 proposal >2.8 NTD/kWh (+27%) -> Goal: Illustrate upcoming contract renewal risk.
+  -->
+  <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+  <header class="sticky top-0 z-50 bg-[#FAF8F5]/95 backdrop-blur border-b border-stone-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between py-3 gap-2">
+        <div class="flex items-center gap-2.5">
+          <span class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-teal-700 text-white font-bold text-lg shadow-sm">⚡</span>
+          <div>
+            <h1 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">森霸電力（豐德發電廠）深度產業分析</h1>
+            <p class="text-xs text-slate-500">臺南市山上區南部核心電力樞紐｜歷史演進、運營現況與未來風險</p>
+          </div>
+        </div>
+        <nav class="flex flex-wrap gap-1.5 text-xs sm:text-sm font-medium">
+          <a href="#overview" class="px-2.5 py-1.5 rounded-md text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition">戰略總覽</a>
+          <a href="#history-tech" class="px-2.5 py-1.5 rounded-md text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition">開發與技術</a>
+          <a href="#operations-esg" class="px-2.5 py-1.5 rounded-md text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition">運營與永續</a>
+          <a href="#governance" class="px-2.5 py-1.5 rounded-md text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition">資本與爭議</a>
+          <a href="#future-sources" class="px-2.5 py-1.5 rounded-md text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition">未來與文獻</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+    <section id="overview" class="space-y-6">
+      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-stone-200 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-teal-50 text-teal-800 border border-teal-200">
+            📍 廠址：臺南市山上區豐德里隙子口66號（統編：70783499）
+          </span>
+          <span class="text-xs text-slate-500">資料查核基準：截至 2026 年 11 月</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3">一、宏觀戰略地位與供電版圖演進</h2>
+        <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+          本節旨在解析森霸電力豐德發電廠於臺灣南部電網中的戰略角色。臺南市受惠於南部科學園區（含台積電三奈米先進製程聚落）擴張，年度總用電量高達 <strong>340 億度以上</strong>，但市內長期缺乏台電直屬大型發電廠。森霸電廠自 2004 年一期商轉、2025 年 5 月二期商轉，至目前推進三期環評，已成為支撐大臺南與南科供電穩定最關鍵的民營發電廠（IPP）。透過下方指標與裝置容量演進圖，可直觀掌握其規模擴張軌跡。
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+          <div class="bg-stone-50 rounded-xl p-4 border border-stone-200">
+            <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">現役總裝置容量 (一+二期)</div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-teal-700 mt-1">2,113.71 <span class="text-sm font-normal text-slate-600">MW</span></div>
+            <div class="text-xs text-slate-600 mt-2">一期 1,013.71 MW + 二期 1,100 MW（2025/05/20 商轉）</div>
+          </div>
+          <div class="bg-stone-50 rounded-xl p-4 border border-stone-200">
+            <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">三期規劃新增容量</div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-amber-600 mt-1">+1,800 <span class="text-sm font-normal text-slate-600">MW</span></div>
+            <div class="text-xs text-slate-600 mt-2">±10% 彈性規劃，若建成總容量將突破 3,913 MW</div>
+          </div>
+          <div class="bg-stone-50 rounded-xl p-4 border border-stone-200">
+            <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">2026 台汽電持股比例</div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-slate-800 mt-1">62.5<span class="text-base font-bold">%</span></div>
+            <div class="text-xs text-slate-600 mt-2">2026 年 1 月收購 JERA 股權並全額併入合併財報</div>
+          </div>
+          <div class="bg-stone-50 rounded-xl p-4 border border-stone-200">
+            <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">一期合約到期倒數</div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-rose-700 mt-1">2029 <span class="text-sm font-normal text-slate-600">年 3 月</span></div>
+            <div class="text-xs text-slate-600 mt-2">25 年 PPA 屆滿，將依《政府採購法》重新議價</div>
+          </div>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-7 bg-stone-50/70 rounded-xl p-4 sm:p-5 border border-stone-200">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-sm sm:text-base font-bold text-slate-800">📊 豐德發電廠各期裝置容量與太陽光電演進</h3>
+              <span class="text-xs text-slate-500">單位：MW（百萬瓦）</span>
+            </div>
+            <div class="chart-container">
+              <canvas id="capacityChart"></canvas>
+            </div>
+          </div>
+          <div class="lg:col-span-5 space-y-4">
+            <div class="p-4 rounded-xl bg-teal-50/60 border border-teal-200">
+              <h4 class="font-bold text-teal-900 text-sm mb-1.5">🏭 南部電力樞紐的結構性意義</h4>
+              <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                2026 年初台汽電完成收購荷蘭商東電國際（JERA 相關）股權後，旗下森霸、星能、星元三家民營電廠總容量達 <strong>3,650 MW</strong>，佔全國總裝置容量約 <strong>6.1%</strong>、全臺 IPP 總容量約 <strong>30%</strong>，其中森霸一、二期即貢獻超過一半，成為南部電網不可或缺的壓艙石。
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-amber-50/60 border border-amber-200">
+              <h4 class="font-bold text-amber-900 text-sm mb-1.5">☀️ 廠區屋頂太陽光電多元佈局</h4>
+              <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                除主力燃氣複循環機組外，森霸亦配合綠能政策於廠房建置太陽光電：一期於 2011 年 12 月及 2014 年 8 月累計建置 <strong>335 kWp</strong>；二期擴建再增設 <strong>800 kWp</strong>，全廠累計太陽光電容量達 <strong>1,135 kWp</strong>。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="history-tech" class="space-y-6">
+      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-stone-200 shadow-sm">
+        <h2 class="text-2xl font-extrabold text-slate-900 mb-3">二、開發歷史沿革與三代機組技術比較</h2>
+        <p class="text-slate-600 leading-relaxed text-sm sm:text-base mb-6">
+          本節整合森霸電廠自 1999 年環評通過至今逾二十五年的關鍵開發里程碑，並提供各期發電機組的技術規格互動比對。使用者可點擊下方「階段篩選按鈕」探索不同時期的建廠決策與重大事件（如 2024 年 0403 強震當日完成點火測試之工程韌性），並透過技術切換器比較三菱重工與西門子 H 級氫能兼容機組的世代差異。
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-6 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-stone-200">
+              <h3 class="font-bold text-slate-800 text-base">📅 關鍵發展時間軸</h3>
+              <div class="flex flex-wrap gap-1.5" id="timelineFilters">
+                <button data-filter="all" class="px-2.5 py-1 text-xs font-semibold rounded-md border tab-active transition">全部歷程</button>
+                <button data-filter="p1" class="px-2.5 py-1 text-xs font-semibold rounded-md border tab-inactive transition">一期建置 (1999-2004)</button>
+                <button data-filter="p2" class="px-2.5 py-1 text-xs font-semibold rounded-md border tab-inactive transition">二期擴建 (2018-2025)</button>
+                <button data-filter="p3" class="px-2.5 py-1 text-xs font-semibold rounded-md border tab-inactive transition">整併與三期 (2026+)</button>
+              </div>
+            </div>
+            <div id="timelineContainer" class="space-y-3 max-h-[460px] overflow-y-auto pr-1"></div>
+          </div>
+
+          <div class="lg:col-span-6 flex flex-col justify-between bg-stone-50 rounded-xl p-5 border border-stone-200">
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <h3 class="font-bold text-slate-800 text-base">⚙️ 各期工程與核心技術規格檢視</h3>
+                <div class="flex gap-1.5" id="phaseSpecTabs">
+                  <button data-phase="phase1" class="px-3 py-1 text-xs font-semibold rounded-md border tab-active transition">第一期 (商轉中)</button>
+                  <button data-phase="phase2" class="px-3 py-1 text-xs font-semibold rounded-md border tab-inactive transition">第二期 (2025商轉)</button>
+                  <button data-phase="phase3" class="px-3 py-1 text-xs font-semibold rounded-md border tab-inactive transition">第三期 (環評中)</button>
+                </div>
+              </div>
+              <div id="phaseSpecContent" class="space-y-3"></div>
+            </div>
+            <div class="mt-5 pt-4 border-t border-stone-200 text-xs text-slate-500 flex items-center justify-between">
+              <span>輸氣來源：中油臺南新市隔離站（18.2 公里地下管線）</span>
+              <span>電力併網：台電南科超高壓變電所</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="operations-esg" class="space-y-6">
+      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-stone-200 shadow-sm">
+        <h2 class="text-2xl font-extrabold text-slate-900 mb-3">三、運作現況與環境永續管理機制</h2>
+        <p class="text-slate-600 leading-relaxed text-sm sm:text-base mb-6">
+          為配合中南部太陽光電白天高發電量所形成的「鴨子曲線」電網特性，森霸電廠全數電力躉售台電並執行嚴苛的 <strong>DSS（Daily Start and Stop）每日啟停調度模式</strong>，一年 365 天隨時升降載。同時，面對南部水資源緊張與空氣品質要求，電廠全廠採用「氣冷式冷卻系統」並透過「空污抵換」大幅削減氮氧化物（NOx）。您可透過下方模擬器觀察 DSS 負載變化，並檢視四大維護制度與環保減排成效。
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+          <div class="lg:col-span-6 bg-stone-50/70 rounded-xl p-5 border border-stone-200">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <h3 class="font-bold text-slate-800 text-sm sm:text-base">📈 DSS 每日啟停與太陽能鴨子曲線調度模擬</h3>
+              <div class="flex gap-1.5" id="dssModeBtns">
+                <button data-mode="sunny" class="px-2.5 py-1 text-xs font-semibold rounded border tab-active transition">日間光電高發載 (DSS降載)</button>
+                <button data-mode="peak" class="px-2.5 py-1 text-xs font-semibold rounded border tab-inactive transition">夜間/陰天高負載支撐</button>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="dssChart"></canvas>
+            </div>
+            <p id="dssCaption" class="text-xs text-slate-600 mt-3 leading-relaxed">
+              <strong>運作解析：</strong>白天 10:00–15:00 南部太陽光電大量併網時，森霸機組配合台電調度降載甚至停機；傍晚 16:00 後光電驟降，西門子 SGT6-9000HL 憑藉快速升載能力迅速補上電力缺口。
+            </p>
+          </div>
+
+          <div class="lg:col-span-6 bg-stone-50/70 rounded-xl p-5 border border-stone-200">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-bold text-slate-800 text-sm sm:text-base">🌿 空污抵換策略：氮氧化物 (NOx) 排放濃度削減</h3>
+              <span class="text-xs text-slate-500">單位：ppm（越低越環保）</span>
+            </div>
+            <div class="chart-container">
+              <canvas id="noxChart"></canvas>
+            </div>
+            <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+              <strong>環評抵換承諾：</strong>為換取二期開發空間並維持區域空品，森霸斥資為一期機組加裝高效率選擇性催化還原系統（SCR），將 NOx 從 20 ppm 降至 14.5 ppm；二期新機組更壓低至 2–6 ppm。
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-5 rounded-xl border border-stone-200 bg-stone-50">
+            <h3 class="font-bold text-slate-900 text-base mb-3 flex items-center gap-2">
+              <span>🛠️</span> 因應頻繁啟停的「四大設備維護體系」
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+              <div class="p-3 bg-white rounded-lg border border-stone-200">
+                <div class="font-bold text-teal-800 mb-1">1. 定期預防保養 (PM)</div>
+                <p class="text-slate-600">依設備金屬疲勞與熱應力特性，執行例行性巡檢、儀器測試與精密校正。</p>
+              </div>
+              <div class="p-3 bg-white rounded-lg border border-stone-200">
+                <div class="font-bold text-teal-800 mb-1">2. 異常請修機制 (CM)</div>
+                <p class="text-slate-600">運轉值班人員日常巡檢若發現微幅異常，即時開立檢修單迅速排除隱患。</p>
+              </div>
+              <div class="p-3 bg-white rounded-lg border border-stone-200">
+                <div class="font-bold text-teal-800 mb-1">3. 年度計畫性停機大修</div>
+                <p class="text-slate-600">嚴格區分 BOPI、TI、MI 三種不同檢修等級，於非尖峰季節排程執行拆檢。</p>
+              </div>
+              <div class="p-3 bg-white rounded-lg border border-stone-200">
+                <div class="font-bold text-teal-800 mb-1">4. 災害與緊急搶修</div>
+                <p class="text-slate-600">針對地震、颱風等天災建立緊急動員機制（2010、2015、2020 榮獲國家工安最高獎項）。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-teal-200 bg-teal-50/40 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-teal-950 text-base mb-3 flex items-center gap-2">
+                <span>💧</span> 氣冷式冷卻系統：無溫排水與抗旱優勢
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-700 leading-relaxed mb-4">
+                傳統大型火力電廠多採水冷系統，耗水量龐大且易因南部枯水期被迫降載。森霸自一期建廠起即全廠採用<strong>氣冷式冷卻系統（Air-Cooled Condenser）</strong>：
+              </p>
+              <ul class="space-y-2 text-xs sm:text-sm text-slate-700">
+                <li class="flex items-start gap-2">
+                  <span class="text-teal-700 font-bold">✓</span>
+                  <span><strong>零溫排水衝擊：</strong>利用大型風扇引入環境空氣冷卻蒸汽循環使用，不排放溫排水至曾文溪與那拔林溪水系。</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-teal-700 font-bold">✓</span>
+                  <span><strong>極低耗水設計：</strong>製程廢水全數經處理後回收再利用，避免在枯水期與大臺南民生及農業灌溉爭水。</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-teal-700 font-bold">✓</span>
+                  <span><strong>生態保留承諾：</strong>二期擴建特別劃設廠區南面 8 公頃為生態保育區，承諾永久不予開發。</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="governance" class="space-y-6">
+      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-stone-200 shadow-sm">
+        <h2 class="text-2xl font-extrabold text-slate-900 mb-3">四、2026 資本結構整併與三大法遵治理爭議</h2>
+        <p class="text-slate-600 leading-relaxed text-sm sm:text-base mb-6">
+          大型基礎建設的營運不僅涉及工程技術，更與資本市場監管及地方鄰避效應（NIMBY）高度連動。2026 年 1 月，最大股東台汽電收購外資股權將森霸持股拉升至 62.5% 並全額併表，帶動集團獲利爆發；然而森霸在過去二十年間亦經歷了公平會反托拉斯裁罰、21.5 億元地方回饋金落差爭議，以及老舊天然氣管線安全抗爭。請點擊下方頁籤深入檢視各項爭議的數據實況與解決方案。
+        </p>
+
+        <div class="bg-stone-50 rounded-xl p-5 border border-stone-200 mb-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <h3 class="font-bold text-slate-900 text-base">🏦 2026 年 1 月台汽電收購整併與財務爆發效應</h3>
+            <span class="px-2.5 py-0.5 rounded text-xs font-semibold bg-teal-100 text-teal-900">會計處理轉變：權益法 ➔ 全額合併報表</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div class="bg-white p-4 rounded-lg border border-stone-200">
+              <div class="text-xs text-slate-500">股權結構重組（收購荷蘭商東電國際/JERA持股）</div>
+              <div class="font-bold text-slate-900 text-lg mt-1">持股由 40%+ 升至 62.5%</div>
+              <p class="text-xs text-slate-600 mt-1">同步提升星能（60%）、星元（64%）持股，台汽電正式轉型為發售電實體營運巨頭。</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg border border-stone-200">
+              <div class="text-xs text-slate-500">2026 年 Q1 合併財報表現（受惠二期商轉+併表）</div>
+              <div class="font-bold text-teal-700 text-lg mt-1">合併營收 137 億元</div>
+              <p class="text-xs text-slate-600 mt-1">稅後淨利達 15.43 億元（年增 337.4%，EPS 2.11 元）；1–2 月累計營收年增高達 600%。</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg border border-stone-200">
+              <div class="text-xs text-slate-500">資本市場操作與風險集中度</div>
+              <div class="font-bold text-slate-900 text-lg mt-1">辦理 1 億股現金增資</div>
+              <p class="text-xs text-slate-600 mt-1">用於償還收購銀行借款，但也使母公司台汽電的獲利表現與森霸電廠的運營風險高度綁定。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="border border-stone-200 rounded-xl overflow-hidden">
+          <div class="flex flex-wrap bg-stone-100 border-b border-stone-200" id="controversyTabs">
+            <button data-issue="feedback" class="flex-1 min-w-[160px] px-4 py-3 text-xs sm:text-sm font-bold text-center border-r border-stone-200 tab-active transition">
+              1. 21.5 億元地方回饋金落差爭議
+            </button>
+            <button data-issue="ftc" class="flex-1 min-w-[160px] px-4 py-3 text-xs sm:text-sm font-bold text-center border-r border-stone-200 tab-inactive transition">
+              2. 公平會 4.89 億元聯合行為裁罰案
+            </button>
+            <button data-issue="pipeline" class="flex-1 min-w-[160px] px-4 py-3 text-xs sm:text-sm font-bold text-center tab-inactive transition">
+              3. 18.2 公里天然氣管線安全檢測
+            </button>
+          </div>
+
+          <div class="p-5 sm:p-6 bg-white">
+            <div id="issue-feedback" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              <div class="lg:col-span-7 space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                <div class="inline-block px-2.5 py-0.5 rounded bg-amber-100 text-amber-900 font-semibold text-xs">地方治理與環評承諾爭議</div>
+                <h4 class="text-lg font-bold text-slate-900">從「營收 1%」變為「淨利 1%」的十倍落差</h4>
+                <p>
+                  立法委員陳亭妃及地方民代指出，森霸 1999 年環評說明書原承諾營運期間比照台電提撥「<strong>售電收入 1%</strong>」作為地方回饋金。依森霸近二十年平均年營收 <strong>120.2 億元</strong>計算，每年應撥付約 <strong>1.2 億元</strong>；但森霸於 2003 年憑公文將基準變更為「<strong>扣除費用後淨盈餘 1%</strong>」（年均淨利 12.27 億元），導致每年僅撥付約 <strong>1,227 萬元</strong>，二十年累計短少約 <strong>21.5 億元</strong>。
+                </p>
+                <p>
+                  <strong>制度化解方：</strong>森霸澄清當初係與地方協議並訂有捐贈要點備查；為平息二期擴建抗爭，森霸同意成立「回饋金委員會」，明定未來每年約 <strong>8,600 萬元</strong>促協金的法定分配比例（如右圖），大幅提升地方治理透明度。
+                </p>
+              </div>
+              <div class="lg:col-span-5 bg-stone-50 p-4 rounded-xl border border-stone-200">
+                <h5 class="text-xs font-bold text-slate-800 text-center mb-2">二期新制：每年約 8,600 萬元回饋金分配比例</h5>
+                <div class="chart-container" style="height: 240px;">
+                  <canvas id="feedbackChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div id="issue-ftc" class="hidden space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <div class="inline-block px-2.5 py-0.5 rounded bg-rose-100 text-rose-900 font-semibold text-xs">反托拉斯法遵指標案件（2022 年 8 月定讞）</div>
+              <h4 class="text-lg font-bold text-slate-900">民營電廠聯合拒絕調降購售電費率案</h4>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 rounded-lg bg-stone-50 border border-stone-200">
+                  <div class="font-bold text-slate-900 mb-1">違法期間與合意機制</div>
+                  <p>2008 年至 2012 年（近 50 個月）間，森霸與其他 8 家民營天然氣電廠透過「台灣民營發電業協進會」召開至少 20 次會議（其中 2008/08/21 首次關鍵會議由森霸召集），集體拒絕配合台電調降容量費率。</p>
+                </div>
+                <div class="p-4 rounded-lg bg-stone-50 border border-stone-200">
+                  <div class="font-bold text-slate-900 mb-1">裁罰金額與行政訴訟歷程</div>
+                  <p>森霸於違法期間銷售額高達 <strong>564 億元</strong>，屬情節重大。公平會 2013 年初裁罰 9 家業者共 63.2 億元（森霸 5.3 億元）；經兩度訴願重為處分後調整為 60.5 億元，<strong>森霸最終確定罰鍰為 4.89 億元</strong>。</p>
+                </div>
+                <div class="p-4 rounded-lg bg-stone-50 border border-stone-200">
+                  <div class="font-bold text-slate-900 mb-1">最高行政法院終局判決</div>
+                  <p>2022 年 8 月最高行政法院駁回森霸與和平電力上訴，全案定讞。判決確立即便在單一買方（台電）的高度管制電力市場中，特許業者仍不得透過水平合意扭曲價格機能。</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="issue-pipeline" class="hidden space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <div class="inline-block px-2.5 py-0.5 rounded bg-teal-100 text-teal-900 font-semibold text-xs">工安風險排查與智慧檢測</div>
+              <h4 class="text-lg font-bold text-slate-900">一、二期共用 20 年地下天然氣管線之安全驗證</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg bg-stone-50 border border-stone-200">
+                  <div class="font-bold text-slate-900 mb-1">地方疑慮與國會現場考察</div>
+                  <p>森霸二期擴建並未新設輸氣管，而是與一期共用自中油新市隔離站引接、全長 <strong>18.2 公里</strong> 的既有地下管線。地方居民擔憂管線已使用近二十年，同時供應 2,113 MW 機組恐引發輸氣壓力劇增與氣爆風險。2024 年 3 月立法院經濟委員會亦親赴現場考察督導。</p>
+                </div>
+                <div class="p-4 rounded-lg bg-stone-50 border border-stone-200">
+                  <div class="font-bold text-slate-900 mb-1">國際級檢測評定「優良等級」</div>
+                  <p>森霸耗資數千萬元委託國際頂尖檢測團隊，歷時三個月執行智慧型金屬探測（Smart Pigging）與管壁完整性檢測，最終獲評定為<strong>「優良等級」</strong>。臺南市政府與經濟部能源署亦建立會同中油的年度定期檢查與數據監測機制。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="future-sources" class="space-y-6">
+      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-stone-200 shadow-sm">
+        <h2 class="text-2xl font-extrabold text-slate-900 mb-3">五、未來發展藍圖、2029 合約風險與查核參考文獻</h2>
+        <p class="text-slate-600 leading-relaxed text-sm sm:text-base mb-6">
+          展望未來，森霸電力正處於「積極擴張」與「合約換約」的雙重關鍵轉折點。一方面，公司已啟動高達 1,800 MW 的第三期燃氣複循環發電計畫環評程序；另一方面，第一期機組為期 25 年的購售電合約（PPA）將於 2029 年 3 月到期，在台電虧損與《政府採購法》新規下，雙方對電價認知的巨大落差將成為未來三年最大的營運考驗。文末亦完整列出本報告嚴格查核之官方與新聞資料來源網址供您溯源查閱。
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+          <div class="lg:col-span-6 p-5 rounded-xl bg-stone-50 border border-stone-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="px-2.5 py-0.5 rounded text-xs font-bold bg-teal-700 text-white">擴建新局</span>
+                <span class="text-xs text-slate-500">環評案號公開審查中</span>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">森霸電力第三期燃氣複循環發電計畫</h3>
+              <ul class="space-y-2 text-xs sm:text-sm text-slate-700">
+                <li><strong>規劃位置與面積：</strong>緊鄰現有森霸二期廠區西側，使用山上區豐德段及𦰡拔林段共 17 筆土地，總面積約 <strong>14.3 公頃</strong>。</li>
+                <li><strong>裝置容量規模：</strong>預計建置總容量高達 <strong>1,800 MW（±10%）</strong> 燃氣複循環機組，延續氣冷式冷卻系統並引接中油新市隔離站天然氣。</li>
+                <li><strong>最新審查進度：</strong>已於 <strong>2026 年 5 月 13 日</strong> 依法召開公開會議，並排定於 <strong>2026 年 11 月 18 日</strong> 進行環境部專案小組初審會議。</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-stone-200">
+              <a href="https://eiadoc.moenv.gov.tw/public/publicMeetingOrBriefDetail/6b0e5bdb-35de-4367-b95d-8e3bd068f802" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-700 hover:text-teal-900 underline">
+                🔗 前往環境部環評開發案論壇查閱三期公開會議文件 ↗
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 p-5 rounded-xl bg-stone-50 border border-stone-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-bold bg-rose-700 text-white">核心風險</span>
+              <span class="text-xs text-slate-500">2029 年 3 月一期合約屆滿</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">2029 年購售電合約（PPA）續約價格博弈</h3>
+            <div class="chart-container" style="height: 200px;">
+              <canvas id="ppaChart"></canvas>
+            </div>
+            <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+              <strong>議價落差分析：</strong>森霸一期合約受《政府採購法》規範無法自動無條件續約。森霸曾於 2025 年 5 月向台電提出將每度電價由約 <strong>2.2 元</strong> 調升至 <strong>2.8 元以上（+27%）</strong>，惟台電面臨鉅額虧損勢必強力壓低費率，談判結果將直接牽動台汽電集團獲利。
+            </p>
+          </div>
+        </div>
+
+        <div class="border-t border-stone-200 pt-6">
+          <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+            <span>📚</span> 嚴格查核之官方網站與參考資料來源網址
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <a href="https://www.sunbapower.com.tw/" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg bg-stone-50 hover:bg-teal-50 border border-stone-200 transition flex items-start justify-between gap-2">
+              <div>
+                <div class="font-bold text-slate-900">1. 森霸電力股份有限公司官方網站</div>
+                <div class="text-slate-500 mt-0.5 break-all">https://www.sunbapower.com.tw/</div>
+                <div class="text-slate-600 mt-1">查核內容：公司基本資料、豐德一/二期廠區概況、DSS調度、四大維護體系及工安獲獎紀錄。</div>
+              </div>
+              <span class="text-teal-700 font-bold">↗</span>
+            </a>
+
+            <a href="https://eiadoc.moenv.gov.tw/public/publicMeetingOrBriefDetail/6b0e5bdb-35de-4367-b95d-8e3bd068f802" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg bg-stone-50 hover:bg-teal-50 border border-stone-200 transition flex items-start justify-between gap-2">
+              <div>
+                <div class="font-bold text-slate-900">2. 環境部環評開發案論壇（森霸電力第三期計畫）</div>
+                <div class="text-slate-500 mt-0.5 break-all">https://eiadoc.moenv.gov.tw/public/publicMeetingOrBriefDetail/6b0e5bdb-35de-4367-b95d-8e3bd068f802</div>
+                <div class="text-slate-600 mt-1">查核內容：森霸三期 1,800 MW 規劃面積（14.3公頃）、氣冷設計及 2026 年公開會議與初審時程。</div>
+              </div>
+              <span class="text-teal-700 font-bold">↗</span>
+            </a>
+
+            <a href="https://www.energy.org.tw/" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg bg-stone-50 hover:bg-teal-50 border border-stone-200 transition flex items-start justify-between gap-2">
+              <div>
+                <div class="font-bold text-slate-900">3. 經濟部能源署及台灣電力公司資訊揭露平台</div>
+                <div class="text-slate-500 mt-0.5 break-all">https://www.energy.org.tw/ ｜ https://www.taipower.com.tw/</div>
+                <div class="text-slate-600 mt-1">查核內容：2025/05/20 森霸二期電業執照核發、IPP 購售電費率機制與南科用電供需結構。</div>
+              </div>
+              <span class="text-teal-700 font-bold">↗</span>
+            </a>
+
+            <a href="https://www.ftc.gov.tw/" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg bg-stone-50 hover:bg-teal-50 border border-stone-200 transition flex items-start justify-between gap-2">
+              <div>
+                <div class="font-bold text-slate-900">4. 公平交易委員會及司法院裁判書查詢系統</div>
+                <div class="text-slate-500 mt-0.5 break-all">https://www.ftc.gov.tw/ ｜ https://judgment.judicial.gov.tw/</div>
+                <div class="text-slate-600 mt-1">查核內容：九家民營電廠聯合拒絕調降費率案（森霸罰鍰 4.89 億元、2022 年 8 月最高行政法院定讞）。</div>
+              </div>
+              <span class="text-teal-700 font-bold">↗</span>
+            </a>
+
+            <a href="https://www.cogen.com.tw/" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg bg-stone-50 hover:bg-teal-50 border border-stone-200 transition flex items-start justify-between gap-2">
+              <div>
+                <div class="font-bold text-slate-900">5. 台灣汽電共生股份有限公司（台汽電）公開資訊</div>
+                <div class="text-slate-500 mt-0.5 break-all">https://www.cogen.com.tw/ ｜ https://mops.twse.com.tw/</div>
+                <div class="text-slate-600 mt-1">查核內容：2026 年 1 月收購 JERA 股權持股升至 62.5%、合併報表 Q1 淨利 15.43 億元及現金增資公告。</div>
+              </div>
+              <span class="text-teal-700 font-bold">↗</span>
+            </a>
+
+            <a href="https://www.ctci.com/" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg bg-stone-50 hover:bg-teal-50 border border-stone-200 transition flex items-start justify-between gap-2">
+              <div>
+                <div class="font-bold text-slate-900">6. 中鼎工程（CTCI）及西門子能源（Siemens Energy）專案紀實</div>
+                <div class="text-slate-500 mt-0.5 break-all">https://www.ctci.com/ ｜ https://www.siemens-energy.com/</div>
+                <div class="text-slate-600 mt-1">查核內容：SGT6-9000HL 氫能兼容渦輪機技術規格、EPC 統包工程及 2024/04/03 強震當日點火測試紀錄。</div>
+              </div>
+              <span class="text-teal-700 font-bold">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 py-6 mt-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+      <div>森霸電力（豐德發電廠）產業深度分析互動報告｜資料來源經多方官方及公開資訊查核</div>
+      <div>臺南市山上區能源基礎設施研究專題</div>
+    </div>
+  </footer>
+
+  <script>
+    function wrapLabel(str, maxLen = 16) {
+      if (str.length <= maxLen) return str;
+      const lines = [];
+      for (let i = 0; i < str.length; i += maxLen) {
+        lines.push(str.slice(i, i + maxLen));
+      }
+      return lines;
+    }
+
+    const timelineData = [
+      { era: 'p1', date: '1999年08月17日', title: '一期環評有條件通過', desc: '配合政府開放民營電廠政策，豐德發電廠開發計畫獲環保署環評審查有條件通過。' },
+      { era: 'p1', date: '2000年08月29日', title: '森霸電力正式登記設立', desc: '7月取得經濟部籌設許可，8月正式設立（統編70783499），由台汽電領銜台糖、外資、兆豐銀等法人投資。' },
+      { era: 'p1', date: '2001年12月', title: '第一期工程正式動工', desc: '選定臺南市山上區台糖那拔林農場（16.74公頃），台汽電承攬主設備安裝，中油鋪設18.2公里地下輸氣管。' },
+      { era: 'p1', date: '2004年03月29日', title: '第一期機組正式商業運轉', desc: '總建造成本約200億元，初期核定980 MW，後續經設備升級與環差通過提升至 1,013.71 MW。' },
+      { era: 'p1', date: '2011–2014年', title: '一期廠區建置太陽光電', desc: '分別於2011年12月及2014年8月在維修廠房與倉庫屋頂建置太陽光電，累計容量達 335 kWp。' },
+      { era: 'p2', date: '2020年07–09月', title: '二期擴建通過環評審查', desc: '環評大會決議無需進入二階環評，森霸承諾保留南面8公頃生態保育區不開發，並執行一期空污抵換。' },
+      { era: 'p2', date: '2021年07–09月', title: '二期 EPC 簽約與動土', desc: '與中鼎工程及德國西門子能源簽署統包合約並動土，引進先進 SGT6-9000HL 燃氣渦輪機。' },
+      { era: 'p2', date: '2024年04月03日', title: '0403強震當日完成首次點火', desc: '花蓮7.2強震當日確認工安無虞後，下午如期完成 SGT6-9000HL 首次點火測試；同年完成輸氣管線國際級檢測獲「優良等級」。' },
+      { era: 'p2', date: '2025年05月20日', title: '第二期機組正式商業運轉', desc: '取得經濟部電業執照，新增 1,100 MW 容量及 800 kWp 太陽光電，全廠總容量達 2,113.71 MW。' },
+      { era: 'p3', date: '2026年01月', title: '台汽電收購外資並全額併表', desc: '台汽電收購荷蘭商東電國際持股，對森霸持股升至 62.5%，帶動2026年Q1淨利年增337.4%。' },
+      { era: 'p3', date: '2026年05–11月', title: '第三期 1,800 MW 計畫啟動環評', desc: '規劃於二期西側14.3公頃土地擴建，5月13日召開公開會議，11月18日進入環境部專案小組初審。' },
+      { era: 'p3', date: '2029年03月', title: '第一期 25 年 PPA 合約屆滿', desc: '面臨《政府採購法》重新議價考驗，森霸與台電針對每度電價（2.2元 vs 2.8元以上）展開關鍵博弈。' }
+    ];
+
+    const phaseSpecs = {
+      phase1: [
+        { label: '機組配置與容量', val: '2套多軸式燃氣複循環機組（4 GT + 2 ST），原核定 980 MW，升級後額定容量 1,013.71 MW' },
+        { label: '核心設備供應商', val: '日本三菱重工（氣渦輪機）、東芝（汽輪機）、巴布科克日立（熱回收鍋爐）' },
+        { label: '廠區面積與造價', val: '臺南市山上區那拔林農場約 16.74 公頃；建廠總投資約新臺幣 200 億元' },
+        { label: '環保與冷卻技術', val: '全廠採用「氣冷式冷卻系統」（無溫排水）；加裝 SCR 系統將 NOx 由 20 ppm 降至 14.5 ppm' },
+        { label: '附屬再生能源', val: '屋頂型太陽光電累計裝置容量 335 kWp（2011年與2014年分批完工）' },
+        { label: '商轉與合約狀態', val: '2004年3月29日商轉；25年購售電合約（PPA）將於 2029年3月屆滿' }
+      ],
+      phase2: [
+        { label: '機組配置與容量', val: '1套多軸式燃氣複循環機組（2 GT + 1 ST），總裝置容量高達 1,100 MW' },
+        { label: '核心設備供應商', val: '德國西門子能源 SGT6-9000HL 氣渦輪機、SST-5000 蒸汽輪機、比利時 John Cockerill 熱回收爐' },
+        { label: '能源轉型前瞻性', val: '具備快速起降調度能力以因應光電鴨子曲線，並保留未來無縫升級「摻氫燃燒」技術路徑' },
+        { label: '環保與生態承諾', val: '先進 SCR 系統將 NOx 控制於 2–6 ppm；延續氣冷式設計；南面 8 公頃劃為永久生態保育區' },
+        { label: '附屬再生能源', val: '增設 800 kWp 太陽光電設施（一、二期合計太陽光電達 1,135 kWp）' },
+        { label: '商轉與統包團隊', val: '中鼎工程 + 西門子能源承攬 EPC；2025年5月20日取得電業執照正式商轉' }
+      ],
+      phase3: [
+        { label: '規劃容量與配置', val: '預計建置總裝置容量高達 1,800 MW（±10%）之高效率燃氣複循環發電機組' },
+        { label: '規劃廠址與面積', val: '現有森霸二期廠區西側（山上區豐德段及𦰡拔林段共17筆土地），面積約 14.3 公頃' },
+        { label: '冷卻與管線規劃', val: '延續氣冷式冷卻系統傳統；天然氣由中油新市隔離站引接，電力併網至南科超高壓變電所' },
+        { label: '戰略驅動因素', val: '因應 AI 算力中心擴張、南科先進半導體擴廠及核能機組除役後之南部基載電力缺口' },
+        { label: '目前推動進度', val: '2026年5月13日召開環評公開會議；2026年11月18日排定環境部專案小組初審會議' },
+        { label: '主要潛在挑戰', val: '地方鄰避效應、高壓輸氣管線承載疑慮，以及環評階段更嚴格的空污與碳排檢視' }
+      ]
+    };
+
+    function renderTimeline(filter = 'all') {
+      const container = document.getElementById('timelineContainer');
+      const filtered = filter === 'all' ? timelineData : timelineData.filter(item => item.era === filter);
+      container.innerHTML = filtered.map(item => {
+        const badgeColors = {
+          p1: 'bg-slate-200 text-slate-800',
+          p2: 'bg-teal-100 text-teal-900',
+          p3: 'bg-amber-100 text-amber-900'
+        };
+        const badgeText = { p1: '第一期', p2: '第二期', p3: '整併/三期' };
+        return `
+          <div class="p-3.5 rounded-xl bg-stone-50 border border-stone-200 hover:border-teal-400 transition">
+            <div class="flex items-center justify-between gap-2 mb-1">
+              <span class="text-xs font-bold text-teal-700">${item.date}</span>
+              <span class="px-2 py-0.5 rounded text-[11px] font-semibold ${badgeColors[item.era]}">${badgeText[item.era]}</span>
+            </div>
+            <div class="font-bold text-slate-900 text-sm mb-1">${item.title}</div>
+            <p class="text-xs text-slate-600 leading-relaxed">${item.desc}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderPhaseSpec(phase = 'phase1') {
+      const container = document.getElementById('phaseSpecContent');
+      container.innerHTML = phaseSpecs[phase].map(row => `
+        <div class="p-3 bg-white rounded-lg border border-stone-200">
+          <div class="text-xs font-bold text-teal-800 mb-0.5">${row.label}</div>
+          <div class="text-xs sm:text-sm text-slate-700 leading-snug">${row.val}</div>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('timelineFilters').addEventListener('click', (e) => {
+      if (e.target.tagName !== 'BUTTON') return;
+      document.querySelectorAll('#timelineFilters button').forEach(btn => {
+        btn.classList.remove('tab-active');
+        btn.classList.add('tab-inactive');
+      });
+      e.target.classList.remove('tab-inactive');
+      e.target.classList.add('tab-active');
+      renderTimeline(e.target.dataset.filter);
+    });
+
+    document.getElementById('phaseSpecTabs').addEventListener('click', (e) => {
+      if (e.target.tagName !== 'BUTTON') return;
+      document.querySelectorAll('#phaseSpecTabs button').forEach(btn => {
+        btn.classList.remove('tab-active');
+        btn.classList.add('tab-inactive');
+      });
+      e.target.classList.remove('tab-inactive');
+      e.target.classList.add('tab-active');
+      renderPhaseSpec(e.target.dataset.phase);
+    });
+
+    document.getElementById('controversyTabs').addEventListener('click', (e) => {
+      if (e.target.tagName !== 'BUTTON') return;
+      document.querySelectorAll('#controversyTabs button').forEach(btn => {
+        btn.classList.remove('tab-active');
+        btn.classList.add('tab-inactive');
+      });
+      e.target.classList.remove('tab-inactive');
+      e.target.classList.add('tab-active');
+
+      const issue = e.target.dataset.issue;
+      ['feedback', 'ftc', 'pipeline'].forEach(id => {
+        const el = document.getElementById('issue-' + id);
+        if (id === issue) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+    });
+
+    renderTimeline('all');
+    renderPhaseSpec('phase1');
+
+    const ctxCapacity = document.getElementById('capacityChart').getContext('2d');
+    new Chart(ctxCapacity, {
+      type: 'bar',
+      data: {
+        labels: [
+          wrapLabel('2004年 第一期商轉'),
+          wrapLabel('2025年 一期+二期現役'),
+          wrapLabel('未來規劃 含第三期環評案')
+        ],
+        datasets: [
+          {
+            label: '第一期機組 (MW)',
+            data: [1013.71, 1013.71, 1013.71],
+            backgroundColor: '#475569',
+            borderRadius: 4
+          },
+          {
+            label: '第二期機組 (MW)',
+            data: [0, 1100, 1100],
+            backgroundColor: '#0F766E',
+            borderRadius: 4
+          },
+          {
+            label: '第三期規劃新增 (MW)',
+            data: [0, 0, 1800],
+            backgroundColor: '#D97706',
+            borderRadius: 4
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
+          tooltip: {
+            callbacks: {
+              footer: (items) => {
+                const total = items.reduce((sum, item) => sum + item.parsed.y, 0);
+                return '該階段總裝置容量：' + total.toFixed(2) + ' MW';
+              }
+            }
+          }
+        },
+        scales: {
+          x: { stacked: true, grid: { display: false } },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            max: 4200,
+            title: { display: true, text: '裝置容量 (MW)', font: { size: 11 } }
+          }
+        }
+      }
+    });
+
+    const ctxDss = document.getElementById('dssChart').getContext('2d');
+    const dssDatasets = {
+      sunny: {
+        sunba: [65, 55, 50, 40, 20, 15, 25, 65, 95, 100, 85, 70],
+        solar: [0, 0, 0, 15, 65, 95, 85, 25, 0, 0, 0, 0],
+        caption: '<strong>運作解析（日間光電高發載）：</strong>白天 10:00–15:00 南部太陽光電大量併網時，森霸機組配合台電調度大幅降載至 15–20% 甚至部分停機；傍晚 16:00 後光電驟降，西門子 SGT6-9000HL 憑藉快速升載能力迅速衝上滿載補齊缺口。'
+      },
+      peak: {
+        sunba: [75, 70, 70, 80, 90, 95, 95, 100, 100, 100, 90, 80],
+        solar: [0, 0, 0, 5, 20, 30, 25, 5, 0, 0, 0, 0],
+        caption: '<strong>運作解析（夜間/陰天高負載支撐）：</strong>當遇到陰雨天太陽光電出力不足，或南科半導體產線全速運轉之用電尖峰時，森霸一、二期機組全天候維持 80–100% 高負載運轉，扮演南部電網最穩固的基載支柱。'
+      }
+    };
+
+    const dssChart = new Chart(ctxDss, {
+      type: 'line',
+      data: {
+        labels: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
+        datasets: [
+          {
+            label: '森霸電廠調度出力率 (%)',
+            data: dssDatasets.sunny.sunba,
+            borderColor: '#0F766E',
+            backgroundColor: 'rgba(15, 118, 110, 0.12)',
+            fill: true,
+            tension: 0.35,
+            borderWidth: 2.5
+          },
+          {
+            label: '南部區域太陽光電出力趨勢 (%)',
+            data: dssDatasets.sunny.solar,
+            borderColor: '#D97706',
+            borderDash: [5, 5],
+            backgroundColor: 'transparent',
+            tension: 0.35,
+            borderWidth: 2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+        },
+        scales: {
+          y: { beginAtZero: true, max: 110, title: { display: true, text: '出力百分比 (%)', font: { size: 11 } } }
+        }
+      }
+    });
+
+    document.getElementById('dssModeBtns').addEventListener('click', (e) => {
+      if (e.target.tagName !== 'BUTTON') return;
+      document.querySelectorAll('#dssModeBtns button').forEach(btn => {
+        btn.classList.remove('tab-active');
+        btn.classList.add('tab-inactive');
+      });
+      e.target.classList.remove('tab-inactive');
+      e.target.classList.add('tab-active');
+      const mode = e.target.dataset.mode;
+      dssChart.data.datasets[0].data = dssDatasets[mode].sunba;
+      dssChart.data.datasets[1].data = dssDatasets[mode].solar;
+      dssChart.update();
+      document.getElementById('dssCaption').innerHTML = dssDatasets[mode].caption;
+    });
+
+    const ctxNox = document.getElementById('noxChart').getContext('2d');
+    new Chart(ctxNox, {
+      type: 'bar',
+      data: {
+        labels: [
+          wrapLabel('一期原設計規範上限'),
+          wrapLabel('一期加裝SCR改善後'),
+          wrapLabel('二期先進SCR標準(2-6ppm)')
+        ],
+        datasets: [{
+          label: '氮氧化物 NOx 排放濃度 (ppm)',
+          data: [20, 14.5, 4],
+          backgroundColor: ['#94A3B8', '#0D9488', '#0F766E'],
+          borderRadius: 6,
+          barPercentage: 0.55
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => ctx.dataIndex === 2 ? '排放濃度：2 ~ 6 ppm（取中位值 4 ppm 示意）' : `排放濃度：${ctx.parsed.y} ppm`
+            }
+          }
+        },
+        scales: {
+          y: { beginAtZero: true, max: 25, title: { display: true, text: 'NOx 濃度 (ppm)', font: { size: 11 } } }
+        }
+      }
+    });
+
+    const ctxFeedback = document.getElementById('feedbackChart').getContext('2d');
+    new Chart(ctxFeedback, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          wrapLabel('山上區公所 (50%)'),
+          wrapLabel('鄰近左鎮/新化/新市 (35%)'),
+          wrapLabel('臺南市政府統籌 (15%)')
+        ],
+        datasets: [{
+          data: [50, 35, 15],
+          backgroundColor: ['#0F766E', '#D97706', '#64748B'],
+          borderWidth: 2,
+          borderColor: '#FFFFFF'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '58%',
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 11, font: { size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const amount = (8600 * ctx.parsed / 100).toFixed(0);
+                return `${ctx.label}：約 ${amount} 萬元/年`;
+              }
+            }
+          }
+        }
+      }
+    });
+
+    const ctxPpa = document.getElementById('ppaChart').getContext('2d');
+    new Chart(ctxPpa, {
+      type: 'bar',
+      data: {
+        labels: [
+          wrapLabel('一期現行合約基準電價'),
+          wrapLabel('森霸2025年5月提出調價訴求')
+        ],
+        datasets: [{
+          label: '每度購售電價 (新臺幣 元/kWh)',
+          data: [2.2, 2.8],
+          backgroundColor: ['#64748B', '#BE123C'],
+          borderRadius: 6,
+          barPercentage: 0.45
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => ctx.dataIndex === 1 ? '訴求調升至 2.8 元/度以上（漲幅約 +27%）' : '現行約 2.2 元/度'
+            }
+          }
+        },
+        scales: {
+          x: { beginAtZero: true, max: 3.4, title: { display: true, text: '新臺幣 元 / 度 (kWh)', font: { size: 11 } } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
